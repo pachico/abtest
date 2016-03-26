@@ -68,4 +68,13 @@ class Configuration
 		return $this;
 	}
 
+	/**
+	 * 
+	 * @return \Pachico\Abtest\Tracking\TrackingInterface
+	 */
+	public function getTracking()
+	{
+		return $this->_tracking;
+	}
+
 }

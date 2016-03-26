@@ -2,7 +2,6 @@
 
 namespace Pachico\Abtest\Config;
 
-
 class FromArrayTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -18,6 +17,7 @@ class FromArrayTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$config_array = require TEST_CONFIG_FOLDER . 'config1.php';
+
 		$this->object = new FromArray($config_array);
 	}
 

@@ -68,11 +68,6 @@ class Test
 		$this->_segmentation = $segmentation;
 		$this->_tracking_id = $tracking_id;
 
-//		if (!is_null($this->_segmentation) && false === $this->_segmentation->isParticipant())
-//		{
-//			$this->_version = false;
-//			return;
-//		}
 	}
 
 	/**

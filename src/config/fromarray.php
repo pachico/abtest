@@ -8,9 +8,6 @@
 
 namespace Pachico\Abtest\Config;
 
-use \Pachico\Abtest\Test;
-use \Pachico\Abtest\Segmentation;
-
 /**
  * Description of array
  *
@@ -19,47 +16,63 @@ use \Pachico\Abtest\Segmentation;
 class FromArray implements ConfiguratorInterface
 {
 
-    /**
-     *
-     * @var Configuration
-     */
-    protected $_configuration;
+	/**
+	 *
+	 * @var Chainable
+	 */
+	protected $_chainable_configurator;
 
-    /**
-     *
-     * @param array $configuration_array
-     */
-    public function __construct(array $configuration_array)
-    {
-        $configuration_object = new Configuration();
+	/**
+	 *
+	 * @param array $configuration_array
+	 */
+	public function __construct(array $configuration_array)
+	{
 
-        if (!empty($configuration_array[ConfiguratorInterface::TESTS]) && is_array($configuration_array[ConfiguratorInterface::TESTS])) {
-            foreach ($configuration_array[ConfiguratorInterface::TESTS] as $name => $test) {
-                $test_object = new Test\Test(
-                    $name, $test[ConfiguratorInterface::SPLIT], $configuration_array[ConfiguratorInterface::MEMORY], ($test[ConfiguratorInterface::SEGMENTATION] instanceof Segmentation\SegmentatIoninterface)
-                        ? $test[ConfiguratorInterface::SEGMENTATION]
-                        : null, !is_null($test[ConfiguratorInterface::TRACKING_ID])
-                        ? $test[ConfiguratorInterface::TRACKING_ID]
-                        : null
-                );
+		$memory = null;
 
-                $configuration_object->addTest($test_object);
-            }
-        }
+		if (isset($configuration_array[ConfiguratorInterface::MEMORY]))
+		{
+			$memory = $configuration_array[ConfiguratorInterface::MEMORY];
+		}
 
-        $configuration_object
-            ->setTracking($configuration_array[ConfiguratorInterface::TRACKING])
-        ;
+		$tracking = null;
 
-        $this->_configuration = $configuration_object;
-    }
+		if (isset($configuration_array[ConfiguratorInterface::TRACKING]))
+		{
+			$tracking = $configuration_array[ConfiguratorInterface::TRACKING];
+		}
 
-    /**
-     *
-     * @return Configuration
-     */
-    public function getConfiguration()
-    {
-        return $this->_configuration;
-    }
+		$this->_chainable_configurator = new Chainable($memory, $tracking);
+
+		if (!empty($configuration_array[ConfiguratorInterface::TESTS]) && is_array($configuration_array[ConfiguratorInterface::TESTS]))
+		{
+			foreach ($configuration_array[ConfiguratorInterface::TESTS] as $name => $test)
+			{
+				$this->_chainable_configurator->addTest(
+					// Test name
+					$name,
+					// Splitting policy
+					$test[ConfiguratorInterface::SPLIT],
+					// Segmentation
+					isset($test[ConfiguratorInterface::SEGMENTATION])
+						? $test[ConfiguratorInterface::SEGMENTATION]
+						: null,
+					// Tracking id
+					!is_null($test[ConfiguratorInterface::TRACKING_ID])
+						? $test[ConfiguratorInterface::TRACKING_ID]
+						: null);
+			}
+		}
+	}
+
+	/**
+	 *
+	 * @return Configuration
+	 */
+	public function getConfiguration()
+	{
+		return $this->_chainable_configurator->getConfiguration();
+	}
+
 }
