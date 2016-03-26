@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Config;
 
 use \Pachico\Abtest\Memory,
@@ -7,11 +12,15 @@ use \Pachico\Abtest\Memory,
 	\Pachico\Abtest\Test;
 
 /**
- * 
+ * Core Configuration class that is used internally
  */
 class Configuration
 {
 
+	/**
+	 *
+	 * @var array Contains the tests to run
+	 */
 	protected $_tests = [];
 
 	/**

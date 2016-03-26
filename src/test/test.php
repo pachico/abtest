@@ -1,7 +1,8 @@
 <?php
 
 /**
- *
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
  */
 
 namespace Pachico\Abtest\Test;
@@ -11,7 +12,7 @@ use \Pachico\Abtest\Split;
 use \Pachico\Abtest\Memory;
 
 /**
- *
+ * Each AB test is an instance of this class
  */
 class Test
 {
@@ -67,7 +68,6 @@ class Test
 		$this->_memory = $memory;
 		$this->_segmentation = $segmentation;
 		$this->_tracking_id = $tracking_id;
-
 	}
 
 	/**
@@ -103,6 +103,7 @@ class Test
 			return false;
 		}
 
+		// Sort of cache
 		if (false === $this->_version)
 		{
 			$this->_version = $this->_memory->getVersion($this, $this->_split);

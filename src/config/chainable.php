@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Config;
 
 use \Pachico\Abtest\Memory,
@@ -9,7 +14,7 @@ use \Pachico\Abtest\Memory,
 	\Pachico\Abtest\Test;
 
 /**
- * 
+ * Chainable configurator creates configuration manually on-the-run
  */
 class Chainable implements ConfiguratorInterface
 {

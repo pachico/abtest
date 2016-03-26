@@ -1,12 +1,21 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Split;
 
 use \Pachico\Abtest\Util,
 	Pachico\Abtest\Exception;
 
 /**
+ * As ArrayProbability but, rather than the split being passed
+ * in constructor, it fetches them from Redis.
  * 
+ * Particularily helpful if you want to modify split without having
+ * to do releases
  */
 class RedisArrayProbability implements SplitInterface
 {
@@ -39,7 +48,6 @@ class RedisArrayProbability implements SplitInterface
 	 * @param string $abtest_redis_key
 	 * @param string $redis_prefix_key
 	 * @param mixed array|\Pachico\Abtest\Util\RedisConnector $redis_connection
-	 * @throws Exception\RedisConnectionException
 	 */
 	public function __construct($abtest_redis_key, $redis_prefix_key = null, $redis_connection = null)
 	{

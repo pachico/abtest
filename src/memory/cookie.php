@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Memory;
 
 use Pachico\Abtest\Test,
@@ -7,13 +12,13 @@ use Pachico\Abtest\Test,
 	Pachico\Abtest\Util;
 
 /**
- * 
+ * To store variations in cookies
  */
 class Cookie implements MemoryInterface
 {
 
 	/**
-	 * 
+	 * The name of the cookie the variations are stored into
 	 */
 	const DEFAULT_COOKIE_NAME = 'abtests';
 
@@ -37,14 +42,15 @@ class Cookie implements MemoryInterface
 
 	/**
 	 *
-	 * @var array
+	 * @var array All tests variation
 	 */
 	protected $_versions = [];
 
 	/**
-	 *
+	 * 
 	 * @param string $cookie_name
 	 * @param int $ttl
+	 * @param \Pachico\Abtest\Util\Cookie $cookie_handler
 	 */
 	public function __construct($cookie_name, $ttl = null, Util\Cookie $cookie_handler = null)
 	{

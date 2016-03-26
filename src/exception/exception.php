@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Exception;
 
 /**
- * Description of exception
- *
- * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * Internal exceptions extend this abstract class
  */
 abstract class Exception extends \Exception
 {
+	
 }

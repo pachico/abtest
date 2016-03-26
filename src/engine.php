@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest;
 
 use \Pachico\Abtest\Test;
 
 /**
- *
+ * AB test engine.
+ * @see examples folder
  */
 class Engine
 {
@@ -42,7 +48,6 @@ class Engine
 	{
 		return $this->_configuration->getTestByName($test_name);
 	}
-
 
 	/**
 	 *

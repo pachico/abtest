@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Tracking;
 
 /**
- * 
+ * Google Analytics tracking
+ * @see https://developers.google.com/analytics/solutions/experiments
+ * Test objects require a tracking id, which must be set in GA 
+ * experiments tool.
+ * Track will retrieve js code to print in web page.
  */
 class GoogleExperiments implements TrackingInterface
 {

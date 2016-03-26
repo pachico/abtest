@@ -1,17 +1,15 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
  */
 
 namespace Pachico\Abtest\Config;
 
 /**
- * Description of array
- *
- * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * Provided an array with parameers, returns 
+ * a full configuration object
  */
 class FromArray implements ConfiguratorInterface
 {

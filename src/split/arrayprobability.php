@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
+
 namespace Pachico\Abtest\Split;
 
 /**
+ * This class establishes the split of traffic in probabilities
+ * ArrayProbability([50,50]) means there's 50% chance to 
+ * fall in control or variation.
  * 
+ * However, ArrayProbability([50,50,50]) means each of the 3 versions
+ * have a 33% of chance
  */
 class ArrayProbability implements SplitInterface
 {
