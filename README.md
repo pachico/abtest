@@ -31,6 +31,9 @@ The package comes with already built in cases but it's very easy to create a new
 	* [Segmentation](#segmentation)
 		-  [By device](#by-device)
 		- [Custom segmentation](#custom-segmentation)
+	* [Memory](#memory)
+		- [Cookie](#cookie)
+		- [Custom memory](#custom-memory)
 - [Examples](#examples)
 - [Contact me](#contact-me)
 
@@ -277,6 +280,24 @@ It internally uses **Mobile_Detect** library, so it's possible to filter by much
 #### Custom segmentation
 
 You can always create your own segmentation. You simply need to implement *Segmentation\SegmentatIoninterface* and inject them from configuration/ors.
+
+### Memory
+
+These classes store versions of users.
+
+#### Cookie
+
+This class will store a cookie in user's browsers with the versions of each test they participate in.
+
+```php
+new Memory\Cookie('ABTESTS', 2592000)
+```
+
+The first parameter indicates the name of the cookie where versions will be saved, whilst the second is the TTL of the given cookie in seconds. 
+
+#### Custom memory
+
+You can always create your own memory classes. You simply need to implement *Memory\MemoryInterface* and inject them from configuration/ors.
 
 ##Examples
 
