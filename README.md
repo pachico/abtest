@@ -1,6 +1,6 @@
 #Pachico/Abtest
 
-[![Build Status](https://travis-ci.org/pachico/abtest.svg?branch=master)](https://travis-ci.org/pachico/abtest)
+[![Build Status](https://travis-ci.org/pachico/abtest.svg?branch=master)](https://travis-ci.org/pachico/abtest) [![Codacy Badge](https://api.codacy.com/project/badge/grade/b8b7e11326e4476d88245668bbb49430)](https://www.codacy.com/app/nanodevel/abtest)
 
 Flexible AB test suite that accepts custom Segmentation, Split, Memory and Tracking.
 
