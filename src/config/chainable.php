@@ -22,12 +22,6 @@ class Chainable implements ConfiguratorInterface
 
 	/**
 	 *
-	 * @var Memory\MemoryInterface 
-	 */
-	protected $_memory;
-
-	/**
-	 *
 	 * @var Tracking\TrackingInterface  
 	 */
 	protected $_tracking;
@@ -39,14 +33,13 @@ class Chainable implements ConfiguratorInterface
 	 */
 	public function __construct(Memory\MemoryInterface $memory = null, Tracking\TrackingInterface $tracking = null)
 	{
-		$this->_configuration = new Configuration();
+		$tracking = $tracking ?
+			: new Tracking\GoogleExperiments(true);
 
-		$this->_configuration->setTracking($tracking ?
-				: new Tracking\GoogleExperiments(true)
-		);
-
-		$this->_memory = $memory ?
+		$memory = $memory ?
 			: new Memory\Cookie(Memory\Cookie::DEFAULT_COOKIE_NAME);
+
+		$this->_configuration = new Configuration($memory, $tracking);
 	}
 
 	/**
@@ -58,7 +51,7 @@ class Chainable implements ConfiguratorInterface
 	 */
 	public function addTest($name, Split\SplitInterface $split, Segmentation\SegmentatIoninterface $segmentation = null, $tracking_id = null)
 	{
-		$test_object = new Test\Test($name, $split, $this->_memory, $segmentation, $tracking_id);
+		$test_object = new Test\Test($name, $split, $this->_configuration->getMemory(), $segmentation, $tracking_id);
 
 		$this->_configuration->addTest($test_object);
 

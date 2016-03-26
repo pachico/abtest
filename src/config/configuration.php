@@ -2,14 +2,12 @@
 
 namespace Pachico\Abtest\Config;
 
-use \Pachico\Abtest\Memory;
-use \Pachico\Abtest\Tracking;
-use \Pachico\Abtest\Test;
+use \Pachico\Abtest\Memory,
+	\Pachico\Abtest\Tracking,
+	\Pachico\Abtest\Test;
 
 /**
- * Description of configuration
- *
- * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * 
  */
 class Configuration
 {
@@ -21,6 +19,23 @@ class Configuration
 	 * @var Tracking\TrackingInterface
 	 */
 	protected $_tracking;
+
+	/**
+	 *
+	 * @var Memory\MemoryInterface
+	 */
+	protected $_memory;
+
+	/**
+	 * 
+	 * @param \Pachico\Abtest\Memory\MemoryInterface $memory
+	 * @param \Pachico\Abtest\Tracking\TrackingInterface $tracking
+	 */
+	public function __construct(Memory\MemoryInterface $memory, Tracking\TrackingInterface $tracking)
+	{
+		$this->_memory = $memory;
+		$this->_tracking = $tracking;
+	}
 
 	/**
 	 *
@@ -58,23 +73,21 @@ class Configuration
 	}
 
 	/**
-	 *
-	 * @param \Pachico\Abtest\Tracking\TrackingInterface $tracking
-	 * @return \Pachico\Abtest\Config\Configuration
-	 */
-	public function setTracking(Tracking\TrackingInterface $tracking)
-	{
-		$this->_tracking = $tracking;
-		return $this;
-	}
-
-	/**
 	 * 
 	 * @return \Pachico\Abtest\Tracking\TrackingInterface
 	 */
 	public function getTracking()
 	{
 		return $this->_tracking;
+	}
+
+	/**
+	 * 
+	 * @return Memory\MemoryInterface
+	 */
+	public function getMemory()
+	{
+		return $this->_memory;
 	}
 
 }

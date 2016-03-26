@@ -24,6 +24,7 @@ class ByDeviceTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Pachico\Abtest\Segmentation\ByDevice::isParticipant
+	 * @covers Pachico\Abtest\Segmentation\ByDevice::__construct
 	 */
 	public function testIsParticipant()
 	{

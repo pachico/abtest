@@ -21,10 +21,14 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->object = new Configuration;
+		$memory = new Memory\Cookie(Memory\Cookie::DEFAULT_COOKIE_NAME);
+		$tracking = new Tracking\GoogleExperiments(true);
+
+		$this->object = new Configuration($memory, $tracking);
 	}
 
 	/**
+	 * @covers Pachico\Abtest\Config\Configuration::__construct
 	 * @covers Pachico\Abtest\Config\Configuration::addTest
 	 * @covers Pachico\Abtest\Config\Configuration::getTests
 	 */
@@ -66,15 +70,22 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers Pachico\Abtest\Config\Configuration::setTracking
+	 * @covers Pachico\Abtest\Config\Configuration::getTracking
 	 */
-	public function testSetTracking()
+	public function testGetTracking()
 	{
-
-		$tracking = new Tracking\GoogleExperiments();
-		
 		$this->assertInstanceOf(
-			'Pachico\Abtest\Config\Configuration', $this->object->setTracking($tracking)
+			'Pachico\Abtest\Tracking\TrackingInterface', $this->object->getTracking()
+		);
+	}
+
+	/**
+	 * @covers Pachico\Abtest\Config\Configuration::getMemory
+	 */
+	public function testGetMemory()
+	{
+		$this->assertInstanceOf(
+			'Pachico\Abtest\Memory\MemoryInterface', $this->object->getMemory()
 		);
 	}
 
