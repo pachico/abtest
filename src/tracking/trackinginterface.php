@@ -9,5 +9,5 @@ namespace Pachico\Abtest\Tracking;
 interface TrackingInterface
 {
 
-    public function getTrackingCode();
+    public function track(array $tests = []);
 }

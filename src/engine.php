@@ -101,7 +101,7 @@ class Engine
 	 */
 	public function getTracking()
 	{
-		return $this->_tracking;
+		return $this->_tracking->track($this->_configuration->getTests());
 	}
 
 }
