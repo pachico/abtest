@@ -26,6 +26,8 @@ The package comes with already built in cases but it's very easy to create a new
 		- [From config file](#from-config-file)
 		- [From config array](#from-config-array)
 		- [Chainable configurator](#chainable-configurator)
+	* [Splitters](#splitters)
+		- [Probabilities from array](#probabilities-from-array)
 - [Examples](#examples)
 - [Contact me](#contact-me)
 
@@ -204,6 +206,25 @@ $configurator
 	->addTest('test1', new Abtest\Split\ArrayProbability([50, 50]), null, 'test1_tracking_id')
 	->addTest('test2', new Abtest\Split\ArrayProbability([50, 50]), null, 'test2_tracking_id');
 ```
+
+### Splitters
+
+#### Probabilities from array
+
+If you want to have a random probability splitting policy you can use **ArrayProbability()** class.
+
+```php
+new Abtest\Split\ArrayProbability([50, 50]);
+
+```
+
+Where the probabilities for a user to land in a particular version are determined by the integer numbers assigned to each version.
+Control is the first array value, variation 1 is the second value, and so on.
+Yes, this means you can have endless variations, each one with a specific weight.
+
+The example above, means a test with **control version** and **one variation**, where each one have 50% chances to be selected.
+
+> The same would be with numbers like *[100, 100]* or *[500, 500]* since the probabilities are weighted relatively to the sum of all of the variations.
 
 ##Examples
 
