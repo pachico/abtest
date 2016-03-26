@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * @author Mariano F.co Benítez Mulet <nanodevel@gmail.com>
+ * @copyright (c) 2016, Mariano F.co Benítez Mulet
+ */
 use \Pachico\Abtest;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $configurator = new Abtest\Config\Chainable(
-	new Abtest\Memory\Cookie('my_abtest_cookis', -1), new Abtest\Tracking\GoogleExperiments(true)
+	new Abtest\Memory\Cookie('ABTESTS', -1), new Abtest\Tracking\GoogleExperiments(true)
 );
 
 $configurator->addTest('colour', new Abtest\Split\ArrayProbability([50, 50]), null, 'colour_tracking_id');

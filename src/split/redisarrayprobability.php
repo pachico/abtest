@@ -64,6 +64,8 @@ class RedisArrayProbability implements SplitInterface
 
 		if (!$this->_redis_connection && is_array($redis_connection))
 		{
+			
+			
 			$this->_redis_connection = new Util\RedisConnector(
 				//Is host set?
 				isset($redis_connection['host'])
@@ -72,7 +74,7 @@ class RedisArrayProbability implements SplitInterface
 				// Is port set
 				isset($redis_connection['port'])
 					? $redis_connection['port']
-					: null,
+					: 6379,
 				// Is timout set?
 				isset($redis_connection['timeout'])
 					? $redis_connection['timeout']
