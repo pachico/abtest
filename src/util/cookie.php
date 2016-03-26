@@ -51,7 +51,7 @@ class Cookie
 			throw new \RuntimeException('Headers are already sent. Cookie cannot be saved.');
 		}
 
-		return setcookie($content, ($ttl < 1)
+		return setcookie($this->_name, $content, ($ttl < 1)
 				? -1
 				: time() + $ttl, '/');
 	}
