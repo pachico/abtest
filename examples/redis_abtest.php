@@ -14,7 +14,7 @@ require __DIR__ . '/../vendor/autoload.php';
 // $redis->set('ABTESTS:test_key', json_encode([50, 50]));
 
 $abtest_engine = new Abtest\Engine(
-	new Abtest\Config\FromFile(__DIR__ . '/configuration/redis_split.php')
+	new Abtest\Config\FromArray(__DIR__ . '/configuration/redis_split.php')
 );
 ?>
 
