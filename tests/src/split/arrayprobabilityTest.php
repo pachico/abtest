@@ -38,10 +38,19 @@ class ArrayProbabilityTest extends \PHPUnit_Framework_TestCase
 		$this->object = new ArrayProbability([50, 50, 50], 110);
 
 		$this->assertSame(2, $this->object->createVersion());
-		
+
 		$this->object = new ArrayProbability([50, 50, 50], 200);
 
 		$this->assertSame(0, $this->object->createVersion());
+	}
+
+	/**
+	 * @covers Pachico\Abtest\Split\ArrayProbability::__construct
+	 * @expectedException \BadMethodCallException
+	 */
+	public function testIncorrectProbabiliesException()
+	{
+		$this->object = new ArrayProbability(['foo', 50]);
 	}
 
 }
