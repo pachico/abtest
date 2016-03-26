@@ -34,6 +34,9 @@ The package comes with already built in cases but it's very easy to create a new
 	* [Memory](#memory)
 		- [Cookie](#cookie)
 		- [Custom memory](#custom-memory)
+	* [Tracking](#tracking)
+		- [Google Experiments](#google-experiments)
+		- [Custom tracking](#custom-tracking)
 - [Examples](#examples)
 - [Contact me](#contact-me)
 
@@ -299,11 +302,42 @@ The first parameter indicates the name of the cookie where versions will be save
 
 You can always create your own memory classes. You simply need to implement *Memory\MemoryInterface* and inject them from configuration/ors.
 
+### Tracking
+
+Tracking might return tracking code, save results somewhere or whatever implementation you need.
+
+#### Google Experiments
+
+Google Experiments requires to print JavaScript to match sessions to versions.
+
+```php
+new Tracking\GoogleExperiments(true);
+``` 
+
+When passing true to the constructor, it will return also the JavaScript source for GoogleExperiments.
+> It is required to provide the **tracking_id** parameter to a test when this tracking is used.
+> This is the default tracking policy if none is provided.
+
+The outcome will be provided by 
+
+```php
+echo $engine->track();
+```
+
+and the result will be something like this:
+```html
+<script src="//www.google-analytics.com/cx/api.js"></script>
+<script>cxApi.setChosenVariation(0, 'colour_tracking_id');</script>
+<script>cxApi.setChosenVariation(1, 'size_tracking_id');</script>
+```
+
+#### Custom tracking
+You can always create your own tracking classes. You simply need to implement *Tracking\TrackingInterface* and inject them from configuration/ors.
 ##Examples
 
 Please check the **examples** folder for real case scenarios.
 
-##Contact me
+## Contact me
 
 Feel free to contact me for bug fixes, doubts or requests.
 
