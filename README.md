@@ -38,25 +38,30 @@ Via composer
 
 The package aims to be powerful and fully configurable but in ideal cases, you will just have an implementation like this:
 
-	use \Pachico\Abtest;
+```php
+use \Pachico\Abtest;
 
-	$abtest_engine = new Abtest\Engine(
-		new Abtest\Config\FromFile('path/to/config.php')
-	);
+$abtest_engine = new Abtest\Engine(
+	new Abtest\Config\FromFile('path/to/config.php')
+);
+```
 
 and interacting with the tests will be as simple as:
 
-	if ($abtest_engine->getTest('your-test')->isParticipant()) 
+```php
+if ($abtest_engine->getTest('your-test')->isParticipant())
+{
+	...
+	if (1 === $abtest_engine->getTest('your-test')->getVersion())
 	{
-		...
-		if (1 === $abtest_engine->getTest('your-test')->getVersion()) 
-		{
-			// Variation version code
-		} else {
-			// Control version code
-		}
-
+		// Variation version code
 	}
+	else
+	{
+		// Control version code
+	}
+}
+```
 
 ## Main concepts
 
@@ -100,76 +105,88 @@ More **Tracking** implementations need to use TrackingInterface and simply be in
 
 For the sake of simplicity, we omit the  namespace usage *\Pachico\Abtest* from examples.
 
-	use \Pachico\Abtest;
+```php
+use \Pachico\Abtest;
+```
 
 ### Instantiation and configurators
 
 **Engine** class requires to constructed passing a configurator to it:
 
-	/* @var $configurator Config\ConfiguratorInterface  */
-	$engine = new Abtest\Engine($configurator);
+```php
+/* @var $configurator Config\ConfiguratorInterface  */
+$engine = new Abtest\Engine($configurator);
+```
 
 #### From config file
 
 You can provide the path to a configuration file with the definiton of tests and dependencies
 
-	$engine = new Abtest\Engine(
-		new Abtest\Config\FromFile('path/to/config.php')
-	);
+```php
+$engine = new Abtest\Engine(
+	new Abtest\Config\FromFile('path/to/config.php')
+);
+```
 
 Where a configuration file could be like this:
 
-	use \Pachico\Abtest\Segmentation,
-		\Pachico\Abtest\Split,
-		\Pachico\Abtest\Tracking,
-		\Pachico\Abtest\Memory;
+```php
+use \Pachico\Abtest\Segmentation,
+	\Pachico\Abtest\Split,
+	\Pachico\Abtest\Tracking,
+	\Pachico\Abtest\Memory;
 
-	// Configuration array
-	return [
-		// Array containing each test
-		'tests' => [
-			// First test name
-			'TEST_FOO' => [
-				// Segmentation policy 
-				// (in this case, only desktop devices)
-				'segmentation' => new Segmentation\ByDevice('desktop'),
-				// Traffic splitting policy
-				// (in this case, random 33% chances each version)
-				'split' => new Split\ArrayProbability([50, 50, 50]),
-				// Tracking id for Google Experiments
-				'tracking_id' => 'ID_FOO',
-			],
-			// Second test name
-			'TEST_BAR' => [
-				// Segmentation policy 
-				// (in this case, only mobile devices)
-				'segmentation' => new Segmentation\ByDevice('mobile'),
-				// Traffic splitting policy
-				// (in this case, fetches in Redis chances)
-				'split' => new Split\RedisArrayProbability('test_bar', 'ABTESTS:', ['host' => '127.0.0.1']),
-				// Tracking id for Google Experiments
-				'tracking_id' => 'ID_BAR',
-			]
+// Configuration array
+return [
+	// Array containing each test
+	'tests' => [
+		// First test name
+		'TEST_FOO' => [
+			// Segmentation policy 
+			// (in this case, only desktop devices)
+			'segmentation' => new Segmentation\ByDevice('desktop'),
+			// Traffic splitting policy
+			// (in this case, random 33% chances each version)
+			'split' => new Split\ArrayProbability([50, 50, 50]),
+			// Tracking id for Google Experiments
+			'tracking_id' => 'ID_FOO',
 		],
-		// Storage memory for users
-		// (in this case, cookie based)
-		'memory' => new Memory\Cookie('abtests'),
-		// Tracking class
-		// (in this case, Google Experiments)
-		'tracking' => new Tracking\GoogleExperiments(true)
-	];
+		// Second test name
+		'TEST_BAR' => [
+			// Segmentation policy 
+			// (in this case, only mobile devices)
+			'segmentation' => new Segmentation\ByDevice('mobile'),
+			// Traffic splitting policy
+			// (in this case, fetches in Redis chances)
+			'split' => new Split\RedisArrayProbability('test_bar', 'ABTESTS:', ['host' => '127.0.0.1']),
+			// Tracking id for Google Experiments
+			'tracking_id' => 'ID_BAR',
+		]
+	],
+	// Storage memory for users
+	// (in this case, cookie based)
+	'memory' => new Memory\Cookie('abtests'),
+	// Tracking class
+	// (in this case, Google Experiments)
+	'tracking' => new Tracking\GoogleExperiments(true)
+];
+```
 
 it might look complicated at a first look, but this level of granularity provides flexibility and capacity to implement your own policies and functionality.
 Think of it as some sort of Dependency Injection Container.
 
+>For your convenience (and to avoid typos), you can find constants in *Config\ConfiguratorInterface* that represent the keys for configuration, like ('tests', 'segmentation', etc.).  
+
 #### From config array
 
 You can also pass the contents of a typical config file to the proper configurator:
-	
-	/* @var $config array */
-	$engine = new Abtest\Engine(
-		new Abtest\Config\FromArray($config)
-	);
+
+```php
+/* @var $config array */
+$engine = new Abtest\Engine(
+	new Abtest\Config\FromArray($config)
+);
+```
 
 The content of a configuration file is the one above, in [From config file](#from-config-file).
 
@@ -177,15 +194,16 @@ The content of a configuration file is the one above, in [From config file](#fro
 
 You might find convenient, instead, to create a configuration from a chainable class.
 
-	$configurator = new Abtest\Config\Chainable(
-		new Abtest\Memory\Cookie('ABTESTS'), 
-		new Abtest\Tracking\GoogleExperiments(true)
-	);
+```php
+$configurator = new Abtest\Config\Chainable(
+	new Abtest\Memory\Cookie('ABTESTS'), 
+	new Abtest\Tracking\GoogleExperiments(true)
+);
 
-	$configurator
-		->addTest('test1', new Abtest\Split\ArrayProbability([50, 50]), null, 'test1_tracking_id')
-		->addTest('test2', new Abtest\Split\ArrayProbability([50, 50]), null, 'test2_tracking_id');
-
+$configurator
+	->addTest('test1', new Abtest\Split\ArrayProbability([50, 50]), null, 'test1_tracking_id')
+	->addTest('test2', new Abtest\Split\ArrayProbability([50, 50]), null, 'test2_tracking_id');
+```
 
 ##Examples
 
