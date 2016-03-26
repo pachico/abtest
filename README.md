@@ -8,8 +8,6 @@ It is now in development phase but feel free to check the examples folder, as th
 
 The package comes with already built in cases but it's very easy to create a new one that will satisfy your technical or marketing requirements.
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
 ## Table of contents
 
 - [Installation](#installation)
@@ -28,6 +26,11 @@ The package comes with already built in cases but it's very easy to create a new
 		- [Chainable configurator](#chainable-configurator)
 	* [Splitters](#splitters)
 		- [Probabilities from array](#probabilities-from-array)
+		- [Probabilities from array in Redis](#probabilities-from-array-in-redis)
+		- [Custom splitters](#custom-splitters)
+	* [Segmentation](#segmentation)
+		-  [By device](#by-device)
+		- [Custom segmentation](#custom-segmentation)
 - [Examples](#examples)
 - [Contact me](#contact-me)
 
@@ -225,6 +228,55 @@ Yes, this means you can have endless variations, each one with a specific weight
 The example above, means a test with **control version** and **one variation**, where each one have 50% chances to be selected.
 
 > The same would be with numbers like *[100, 100]* or *[500, 500]* since the probabilities are weighted relatively to the sum of all of the variations.
+
+#### Probabilities from array in Redis
+
+With this class, you can fetch from Redis the probabilities array.
+You might want to do this to avoid having to do a release simply to chance splitting policy.
+
+```php
+new Split\RedisArrayProbability('test_key', 'ABTESTS:', [
+	'host' => '127.0.0.1'
+]),
+```
+
+Internally, it implements **Credis**, which allows you to connect to Redis even if you don't have the php extension installed (although it is recommended, for better performance). 
+You can indicate a prefix for all your keys in Redis and the connection parameters.
+Check phpdoc for more details about parameters to be sent.
+
+#### Custom splitters
+
+You can always create your own splitters. You simply need to implement *Split\SplitInterface* and inject them from configuration/ors.
+
+### Segmentation
+
+Segmentation allows you to select the audience for each AB test.
+This library allows you to filter users by their device type.
+
+#### By device
+
+To filter by device simply use:
+
+```php
+new Segmentation\ByDevice(Segmentation\ByDevice::DEVICE_NOT_MOBILE)
+```
+
+Other filters are:
+
+```php
+Segmentation\ByDevice::DEVICE_DESKTOP;
+Segmentation\ByDevice::DEVICE_TABLET;
+Segmentation\ByDevice::DEVICE_MOBILE;
+Segmentation\ByDevice::DEVICE_NOT_DESKTOP;
+Segmentation\ByDevice::DEVICE_NOT_MOBILE;
+
+```
+
+It internally uses **Mobile_Detect** library, so it's possible to filter by much more.
+
+#### Custom segmentation
+
+You can always create your own segmentation. You simply need to implement *Segmentation\SegmentatIoninterface* and inject them from configuration/ors.
 
 ##Examples
 
