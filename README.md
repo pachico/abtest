@@ -366,6 +366,6 @@ Please check the **examples** folder for real case scenarios.
 
 ## Contact and contribute
 
-Feel free to contact me at [nanodevel@gmail.com](nanodevel@gmail.com) or in [Github](https://github.com/pachico/abtest) for bug fixes, doubts, requests or contributions.
+Feel free to contact me at [nanodevel@gmail.com](mailto:nanodevel@gmail.com) or in [Github](https://github.com/pachico/abtest) for bug fixes, doubts, requests or contributions.
 
 Cheers
