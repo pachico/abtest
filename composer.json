@@ -1,6 +1,6 @@
 {
 	"name": "pachico/abtest",
-	"description": "Flexible and fully configurable package to run AB tests in PHP based applications.",
+	"description": "Flexible and framework agnostic AB test library.",
 	"type": "library",
 	"license": "MIT",
 	"authors": [
